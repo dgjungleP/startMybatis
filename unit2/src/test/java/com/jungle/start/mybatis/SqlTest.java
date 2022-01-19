@@ -1,10 +1,13 @@
 package com.jungle.start.mybatis;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.ibatis.executor.loader.ResultLoaderMap;
+import org.apache.ibatis.executor.loader.javassist.JavassistProxyFactory;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.SQL;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.jdbc.SqlRunner;
+import org.apache.ibatis.mapping.ResultMap;
 import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.MetaClass;
 import org.apache.ibatis.reflection.MetaObject;
@@ -12,6 +15,7 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 import org.apache.ibatis.reflection.factory.DefaultObjectFactory;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.reflection.invoker.Invoker;
+import org.apache.ibatis.session.Configuration;
 import org.junit.Before;
 import org.junit.Test;
 import org.omg.CORBA.portable.ValueOutputStream;
@@ -25,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static org.mockito.Mockito.mock;
 
 public class SqlTest {
     private Connection connection;
@@ -109,5 +115,22 @@ public class SqlTest {
         System.out.println(list);
         System.out.println(map);
     }
+
+    @Test
+    public void testProxyFactory() {
+        JavassistProxyFactory factory = new JavassistProxyFactory();
+        Order order = new Order("A1", "Hello");
+        DefaultObjectFactory objectFactory = new DefaultObjectFactory();
+        Object proxy = factory.createProxy(order,
+                mock(ResultLoaderMap.class),
+                mock(Configuration.class),
+                objectFactory,
+                Arrays.asList(String.class, String.class),
+                Arrays.asList(order.getOrderNo(), order.getGoodsName()));
+        System.out.println(proxy.getClass());
+        System.out.println(((Order) proxy).getGoodsName());
+
+    }
+
 
 }
