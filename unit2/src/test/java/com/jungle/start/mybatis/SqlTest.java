@@ -7,7 +7,6 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.SQL;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.jdbc.SqlRunner;
-import org.apache.ibatis.mapping.ResultMap;
 import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.MetaClass;
 import org.apache.ibatis.reflection.MetaObject;
@@ -18,9 +17,6 @@ import org.apache.ibatis.reflection.invoker.Invoker;
 import org.apache.ibatis.session.Configuration;
 import org.junit.Before;
 import org.junit.Test;
-import org.omg.CORBA.portable.ValueOutputStream;
-
-import javax.sound.midi.Soundbank;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
