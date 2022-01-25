@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<users>
+    <user id='1'>
+        <name>hello</name>
+        <createTime>2021-01-02 00:00:00</createTime>
+        <password>admin</password>
+        <phone>111</phone>
+        <nickename>h</nickename>
+    </user>
+    <user id='2'>
+        <name>world</name>
+        <createTime>2021-01-03 00:00:00</createTime>
+        <password>admin</password>
+        <phone>112</phone>
+        <nickename>w</nickename>
+    </user>
+</users>
