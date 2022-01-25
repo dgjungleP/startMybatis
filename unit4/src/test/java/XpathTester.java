@@ -1,5 +1,6 @@
 import com.alibaba.fastjson.JSON;
 import com.jungle.start.mybatis.entity.UserEntity;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.apache.ibatis.io.Resources;
@@ -63,7 +64,19 @@ public class XpathTester {
         dateConverter.setPattern("yyyy-MM-dd HH:mm:ss");
         ConvertUtils.register(dateConverter, Date.class);
         List<UserEntity> result = new ArrayList<>();
-        XNode node = parser.evalNode("/users/*");
+        List<XNode> nodeList = parser.evalNodes("/users/*");
+        for (XNode node : nodeList) {
+            UserEntity userEntity = new UserEntity();
+            result.add(userEntity);
+
+            Long id = node.getLongAttribute("id");
+            userEntity.setId(id);
+            List<XNode> children = node.getChildren();
+            for (XNode child : children) {
+                BeanUtils.setProperty(userEntity, child.getName(), child.getStringBody());
+            }
+
+        }
 
 
         System.out.println(JSON.toJSONString(result));
