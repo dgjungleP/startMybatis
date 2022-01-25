@@ -1,13 +1,14 @@
 package com.jungle.start.mybatis;
 
+import com.alibaba.fastjson.JSON;
 import com.jungel.start.mybatis.entity.UserEntity;
 import com.jungel.start.mybatis.mapper.UserMapper;
+import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.session.SqlSessionManager;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.session.*;
+import org.apache.ibatis.transaction.jdbc.JdbcTransaction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -47,5 +48,15 @@ public class TestMybatis {
         UserMapper mapper = sqlSessionManager.getMapper(UserMapper.class);
         List<UserEntity> userEntities = mapper.listAllUser();
         System.out.println(userEntities);
+    }
+
+    @Test
+    public void testExecutor() throws Exception {
+        Configuration configuration = sqlSession.getConfiguration();
+        MappedStatement mappedStatement = configuration.getMappedStatement("com.jungel.start.mybatis.mapper.UserMapper.listAllUser");
+        Executor executor = configuration.newExecutor(new JdbcTransaction(sqlSession.getConnection()), ExecutorType.REUSE);
+        List<UserEntity> query = executor.query(mappedStatement, null, RowBounds.DEFAULT, Executor.NO_RESULT_HANDLER);
+        System.out.println(JSON.toJSON(query));
+
     }
 }
