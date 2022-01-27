@@ -85,13 +85,6 @@ public class XpathTester {
 
     }
 
-    @Test
-    public void testConfiguration() throws Exception {
-        InputStream resource = Resources.getResourceAsStream("mybatis-config.xml");
-        XMLConfigBuilder builder = new XMLConfigBuilder(resource);
-        Configuration configuration = builder.parse();
-        System.out.println(configuration);
-    }
 
     private UserEntity buildUser(String id, String name, String createTime, String phone, String nickname) throws ParseException {
         UserEntity entity = new UserEntity();
