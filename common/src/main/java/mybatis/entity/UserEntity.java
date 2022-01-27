@@ -1,4 +1,4 @@
-package com.jungle.start.mybatis.entity;
+package mybatis.entity;
 
 import lombok.Data;
 
@@ -9,6 +9,8 @@ public class UserEntity {
     private Long id;
     private String name;
     private Date createTime;
+    private String password;
     private String phone;
-    private String nickname;
+    private String nickName;
+
 }

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jungel.start.mybatis.mapper.UserMapper">
+<mapper namespace="mybatis.mapper.UserMapper">
 
-    <select id="listAllUser" resultType="com.jungel.start.mybatis.entity.UserEntity">
+    <select id="listAllUser" resultType="mybatis.entity.UserEntity">
         select * from user_info;
     </select>
 </mapper>

@@ -3,9 +3,11 @@ import com.jungle.start.mybatis.entity.UserEntity;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
+import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.parsing.XPathParser;
+import org.apache.ibatis.session.Configuration;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -68,7 +70,6 @@ public class XpathTester {
         for (XNode node : nodeList) {
             UserEntity userEntity = new UserEntity();
             result.add(userEntity);
-
             Long id = node.getLongAttribute("id");
             userEntity.setId(id);
             List<XNode> children = node.getChildren();
@@ -84,13 +85,20 @@ public class XpathTester {
 
     }
 
+    @Test
+    public void testConfiguration() throws Exception {
+        InputStream resource = Resources.getResourceAsStream("mybatis-config.xml");
+        XMLConfigBuilder builder = new XMLConfigBuilder(resource);
+        Configuration configuration = builder.parse();
+        System.out.println(configuration);
+    }
+
     private UserEntity buildUser(String id, String name, String createTime, String phone, String nickname) throws ParseException {
         UserEntity entity = new UserEntity();
         entity.setId(Long.valueOf(id));
         entity.setName(name);
         entity.setNickname(nickname);
         entity.setPhone(phone);
-
         entity.setCreateTime(SimpleDateFormat.getDateInstance().parse(createTime));
         return entity;
     }
